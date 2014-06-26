@@ -51,37 +51,35 @@ void setup(){
 }
 
 void loop(){
-  String hexch = ""
-  char character;
+  char hexch[7];
   if (Serial.available())  {
-     character = Serial.read();
-     hexch.concat(character);
-     parse(hexch);
+     Serial.readBytesUntil('q',hexch,7);
   }
+     parse(hexch);
 }
 
 void parse(String hexch) {
   int r, g, b, ch;
-  r = (15 * hex2int(hexch.substring(0,1))) + hex2int(hexch.substring(1,2));
-  g = (15 * hex2int(hexch.substring(2,3))) + hex2int(hexch.substring(3,4));
-  b = (15 * hex2int(hexch.substring(4,5))) + hex2int(hexch.substring(5,6));
-  ch = (int)hexch.substring(6,7);
+  r = (15 * hex2int(hexch[0])) + hex2int(hexch[1]);
+  g = (15 * hex2int(hexch[2])) + hex2int(hexch[3]);
+  b = (15 * hex2int(hexch[4])) + hex2int(hexch[5]);
+  ch = (int)hexch[6];
   change(r,g,b,ch);
 }
 
-int hex2int(char x) {
+int hex2int(string x) {
   switch (x) {
-    case a:
+    case 'a':
       return 10;
-    case b:
+    case 'b':
       return 11;
-    case c:
+    case 'c':
       return 12;
-    case d:
+    case 'd':
       return 13;
-    case e:
+    case 'e':
       return 14;
-    case f:
+    case 'f':
       return 15;
     default:
       return (int)x;
