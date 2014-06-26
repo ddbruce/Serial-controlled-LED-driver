@@ -59,8 +59,6 @@ void setup(){
 void loop(){  
   if (Serial.available() >= 7)  {
      Serial.readBytes(hexch,7);
-     // TODO: Add in checks to make sure data is actually hex
-     //       put this check in here or in parse.
      parse(hexch);
   }
 }
@@ -105,7 +103,7 @@ void change(int r, int g, int b, int ch) {
   setPWM(ch*3+2,b*4095/255);
   
   //testing code:
-  //Serial.print("Set R to " + String(r) + ", G to " + String(g) + ", and B to " + String(b) + " on channel "  + String(ch) + ".\n");
+  Serial.print("Set R to " + String(r) + ", G to " + String(g) + ", and B to " + String(b) + " on channel "  + String(ch) + ".\n");
 }
 
 /*
