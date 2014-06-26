@@ -67,9 +67,9 @@ void loop(){
 
 void parse(char* hexch) {
   int r, g, b, ch;
-  r = (15 * hex2int(hexch[0])) + hex2int(hexch[1]);
-  g = (15 * hex2int(hexch[2])) + hex2int(hexch[3]);
-  b = (15 * hex2int(hexch[4])) + hex2int(hexch[5]);
+  r = (16 * hex2int(hexch[0])) + hex2int(hexch[1]);
+  g = (16 * hex2int(hexch[2])) + hex2int(hexch[3]);
+  b = (16 * hex2int(hexch[4])) + hex2int(hexch[5]);
   ch = ((int)hexch[6])-48;
   change(r,g,b,ch);
 }
@@ -77,16 +77,22 @@ void parse(char* hexch) {
 int hex2int(char x) {
   switch (x) {
     case 'a':
+    case 'A':
       return 10;
     case 'b':
+    case 'B':
       return 11;
     case 'c':
+    case 'C':
       return 12;
     case 'd':
+    case 'D':
       return 13;
     case 'e':
+    case 'E':
       return 14;
     case 'f':
+    case 'F':
       return 15;
     default:
       return ((int)x)-48;
@@ -94,9 +100,9 @@ int hex2int(char x) {
 }
 
 void change(int r, int g, int b, int ch) {
-  setPWM(ch*3,r/255*4095);
-  setPWM(ch*3+1,g/255*4095);
-  setPWM(ch*3+2,b/255*4095);
+  setPWM(ch*3,r*4095/255);
+  setPWM(ch*3+1,g*4095/255);
+  setPWM(ch*3+2,b*4095/255);
   
   //testing code:
   //Serial.print("Set R to " + String(r) + ", G to " + String(g) + ", and B to " + String(b) + " on channel "  + String(ch) + ".\n");
