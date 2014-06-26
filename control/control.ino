@@ -99,7 +99,7 @@ void change(int r, int g, int b, int ch) {
   setPWM(ch*3+2,b/255*4095);
   
   //testing code:
-  Serial.print("Set R to " + String(r) + ", G to " + String(g) + ", and B to " + String(b) + " on channel "  + String(ch) + ".\n");
+  //Serial.print("Set R to " + String(r) + ", G to " + String(g) + ", and B to " + String(b) + " on channel "  + String(ch) + ".\n");
 }
 
 /*
