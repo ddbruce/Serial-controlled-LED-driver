@@ -54,7 +54,7 @@ void setup(){
 }
 
 void loop(){  
-  if (Serial.available() == 7)  {
+  if (Serial.available() >= 7)  {
      Serial.readBytes(hexch,7);
      // TODO: Add in checks to make sure data is actually hex
      //       put this check in here or in parse.
@@ -62,12 +62,12 @@ void loop(){
   }
 }
 
-void parse(String hexch) {
+void parse(char* hexch) {
   int r, g, b, ch;
   r = (15 * hex2int(hexch[0])) + hex2int(hexch[1]);
   g = (15 * hex2int(hexch[2])) + hex2int(hexch[3]);
   b = (15 * hex2int(hexch[4])) + hex2int(hexch[5]);
-  ch = (int)hexch[6];
+  ch = ((int)hexch[6])-48;
   change(r,g,b,ch);
 }
 
@@ -86,7 +86,7 @@ int hex2int(char x) {
     case 'f':
       return 15;
     default:
-      return (int)x;
+      return ((int)x)-48;
   }
 }
 
@@ -96,7 +96,7 @@ void change(int r, int g, int b, int ch) {
   setPWM(ch*3+2,b/255*4095);
   
   //testing code:
-  Serial.print("Changed R to " + String(r) + ", G to " + String(g) + ", and B to " + String(b) + " on channel "  + String(ch) + ".\n");
+  Serial.print("Set R to " + String(r) + ", G to " + String(g) + ", and B to " + String(b) + " on channel "  + String(ch) + ".\n");
 }
 
 /*
