@@ -67,7 +67,7 @@ void parse(String hexch) {
   change(r,g,b,ch);
 }
 
-int hex2int(string x) {
+int hex2int(char x) {
   switch (x) {
     case 'a':
       return 10;
