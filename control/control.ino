@@ -36,6 +36,9 @@ volatile bool sevSegOff = true;
 // values used for mode set/buttton debouncing
 volatile long modeSetTime = 0;
   
+// buffer for serial input
+char hexch[7];
+    
 // definition of registers on the pwm chip
 #define LED0_ON_L 0x6
 #define LED0_ON_H 0x7
@@ -50,10 +53,11 @@ void setup(){
   setConfiguration();
 }
 
-void loop(){
-  char hexch[7];
-  if (Serial.available())  {
-     Serial.readBytesUntil('\n',hexch,7);
+void loop(){  
+  if (Serial.available() == 7)  {
+     Serial.readBytes(hexch,7);
+     // TODO: Add in checks to make sure data is actually hex
+     //       put this check in here or in parse.
      parse(hexch);
   }
 }
