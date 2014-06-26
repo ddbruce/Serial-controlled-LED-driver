@@ -16,7 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
- 
+  
  /*
   *
   * Note: You can tell the difference between Dan and Ethan's code because Dan rarely comments.
@@ -53,9 +53,9 @@ void setup(){
 void loop(){
   char hexch[7];
   if (Serial.available())  {
-     Serial.readBytesUntil('q',hexch,7);
-  }
+     Serial.readBytesUntil('\n',hexch,7);
      parse(hexch);
+  }
 }
 
 void parse(String hexch) {
@@ -90,6 +90,9 @@ void change(int r, int g, int b, int ch) {
   setPWM(ch*3,r/255*4095);
   setPWM(ch*3+1,g/255*4095);
   setPWM(ch*3+2,b/255*4095);
+  
+  //testing code:
+  Serial.print("Changed R to " + String(r) + ", G to " + String(g) + ", and B to " + String(b) + " on channel "  + String(ch) + ".\n");
 }
 
 /*
