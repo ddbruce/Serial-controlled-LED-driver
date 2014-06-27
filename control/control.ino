@@ -22,7 +22,7 @@
   * Note: You can tell the difference between Dan and Ethan's code because Dan rarely comments.
   * If you see a bunch of code without comments, it's most likely Dan's.
   *
-  * "If it's hard to write, it should be hard to read."
+  * "If it's hard to write, it should be hard to understand."
   *                                    -Jonathan M. Bruce
   *
   */
