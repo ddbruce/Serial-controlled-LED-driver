@@ -18,22 +18,15 @@
 			'color': color.getHexString()
 		});
 	}	
-	function postphp() {
-		var ch1 = $("#ch1").val();
-		var ch2 = $("#ch2").val();
-		var ch3 = $("#ch3").val();
-		var ch4 = $("#ch4").val();
-		var ch5 = $("#ch5").val();
+	function postphp(id,channel) {
+		var color = $(id).chromoselector('getColor').getHexString().substring(1);
 		//console.log(ch1 + "," + ch2 + "," + ch3 + "," + ch4 + "," + ch5);
 		$.ajax({
 			url : "change.php",
 			type: "POST",
 			data: {
-				ch1: ch1,
-				ch2: ch2,
-				ch3: ch3,
-				ch4: ch4,
-				ch5: ch5
+				channel: channel,
+				color: color,
 			},
 			success: function(data) {
 				$("#simple-msg").html('<pre><code>' + data +  '</code></pre>');
@@ -54,7 +47,7 @@
 			},
 			update: function() {
 				colorbg(this);
-				postphp();
+				postphp(this,1);
 			},
 			str2color: function (str) {
 				return '#' + str;
@@ -70,7 +63,7 @@
 			},
 			update: function() {
 				colorbg(this);
-				postphp();
+				postphp(this,2);
 			},
 			str2color: function (str) {
 				return '#' + str;
@@ -86,7 +79,7 @@
 			},
 			update: function() {
 				colorbg(this);
-				postphp();
+				postphp(this,3);
 			},
 			str2color: function (str) {
 				return '#' + str;
@@ -102,7 +95,7 @@
 			},
 			update: function() {
 				colorbg(this);
-				postphp();
+				postphp(this,4);
 			},
 			str2color: function (str) {
 				return '#' + str;
@@ -118,7 +111,7 @@
 			},
 			update: function() {
 				colorbg(this);
-				postphp();
+				postphp(this,5);
 			},
 			str2color: function (str) {
 				return '#' + str;
