@@ -57,8 +57,8 @@ void setup(){
 }
 
 void loop(){  
-  if (Serial.available() >= 7)  {
-     Serial.readBytes(hexch,7);
+  if (Serial.available() >= 8)  {
+     Serial.readBytesUntil('\n',hexch,8);
      parse(hexch);
   }
 }
