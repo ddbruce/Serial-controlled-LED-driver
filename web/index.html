@@ -3,144 +3,29 @@
 <head>
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/>
 	<title>157 Third Street</title>
-	<link rel="stylesheet" type="text/css" href="style.css">
-	<link rel="stylesheet" type="text/css" href="chromoselector.css">
-	<script src="jquery-1.10.2.min.js"></script>
-	<script src="chromoselector.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+	<link rel="stylesheet" type="text/css" href="css/chromoselector.css">
+	<script src="js/jquery-1.10.2.min.js"></script>
+	<script src="js/chromoselector.min.js"></script>
 	<script>
 	$(document).bind('touchmove', function(e) {
 		e.preventDefault();
 	});
-	$(document).ready(function (){
-		$.fn.chromoselector
-		.defaults("width", 180)
-		.defaults("ringwidth", 50)
-		.defaults("resizable", false)
-		.defaults("speed", 250)
-
-		$("#ch1").chromoselector({
-			create: function() {
-				var color = $(this).chromoselector('getColor');
-				$(this).css({
-					'background-color': color.getHexString(),
-					'color': color.getHexString(),
-				});
-				$(this).chromoselector('setColor','#f00');
-			},
-			update: function() {
-				var color = $(this).chromoselector('getColor');
-				$(this).css({
-					'background-color': color.getHexString(),
-					'color': color.getHexString(),
-				});
-			},
-			str2color: function (str) {
-				return '#' + str;
-			},
-			color2str: function (color) {
-				return color.getHexString().substring(1);
-			}
+	function colorbg(id){
+		var color = $(id).chromoselector('getColor');
+		$(id).css({
+			'background-color': color.getHexString(),
+			'color': color.getHexString()
 		});
-		$("#ch2").chromoselector({
-			create: function() {
-				var color = $(this).chromoselector('getColor');
-				$(this).css({
-					'background-color': color.getHexString(),
-					'color': color.getHexString(),
-				});
-				$(this).chromoselector('setColor','#f00');
-			},
-			update: function() {
-				var color = $(this).chromoselector('getColor');
-				$(this).css({
-					'background-color': color.getHexString(),
-					'color': color.getHexString(),
-				});
-			},
-			str2color: function (str) {
-				return '#' + str;
-			},
-			color2str: function (color) {
-				return color.getHexString().substring(1);
-			}
-		});
-		$("#ch3").chromoselector({
-			create: function() {
-				var color = $(this).chromoselector('getColor');
-				$(this).css({
-					'background-color': color.getHexString(),
-					'color': color.getHexString(),
-				});
-				$(this).chromoselector('setColor','#f00');
-			},
-			update: function() {
-				var color = $(this).chromoselector('getColor');
-				$(this).css({
-					'background-color': color.getHexString(),
-					'color': color.getHexString(),
-				});
-			},
-			str2color: function (str) {
-				return '#' + str;
-			},
-			color2str: function (color) {
-				return color.getHexString().substring(1);
-			}
-		});
-		$("#ch4").chromoselector({
-			create: function() {
-				var color = $(this).chromoselector('getColor');
-				$(this).css({
-					'background-color': color.getHexString(),
-					'color': color.getHexString(),
-				});
-				$(this).chromoselector('setColor','#f00');
-			},
-			update: function() {
-				var color = $(this).chromoselector('getColor');
-				$(this).css({
-					'background-color': color.getHexString(),
-					'color': color.getHexString(),
-				});
-			},
-			str2color: function (str) {
-				return '#' + str;
-			},
-			color2str: function (color) {
-				return color.getHexString().substring(1);
-			}
-		});
-		$("#ch5").chromoselector({
-			create: function() {
-				var color = $(this).chromoselector('getColor');
-				$(this).css({
-					'background-color': color.getHexString(),
-					'color': color.getHexString(),
-				});
-				$(this).chromoselector('setColor','#f00');
-			},
-			update: function() {
-				var color = $(this).chromoselector('getColor');
-				$(this).css({
-					'background-color': color.getHexString(),
-					'color': color.getHexString(),
-				});
-			},
-			str2color: function (str) {
-				return '#' + str;
-			},
-			color2str: function (color) {
-				return color.getHexString().substring(1);
-			}
-		});
-		$("input[type='text']").change(function() {
-			var ch1 = $("#ch1").val();
-			var ch2 = $("#ch2").val();
-			var ch3 = $("#ch3").val();
-			var ch4 = $("#ch4").val();
-			var ch5 = $("#ch5").val();
-			console.log(ch2);
-/*			$.ajax({
+	}	
+	function postphp() {
+		var ch1 = $("#ch1").val();
+		var ch2 = $("#ch2").val();
+		var ch3 = $("#ch3").val();
+		var ch4 = $("#ch4").val();
+		var ch5 = $("#ch5").val();
+		//console.log(ch1 + "," + ch2 + "," + ch3 + "," + ch4 + "," + ch5);
+		$.ajax({
 			url : "change.php",
 			type: "POST",
 			data: {
@@ -153,8 +38,95 @@
 			success: function(data) {
 				$("#simple-msg").html('<pre><code>' + data +  '</code></pre>');
 			}
-		});*/
-	});
+		});
+	}
+	$(document).ready(function (){
+		$.fn.chromoselector
+		.defaults("width", 180)
+		.defaults("ringwidth", 50)
+		.defaults("resizable", false)
+		.defaults("speed", 250)
+
+		$("#ch1").chromoselector({
+			create: function() {
+				colorbg(this);
+				$(this).chromoselector('setColor','#f00');
+			},
+			update: function() {
+				colorbg(this);
+				postphp();
+			},
+			str2color: function (str) {
+				return '#' + str;
+			},
+			color2str: function (color) {
+				return color.getHexString().substring(1);
+			}
+		});
+		$("#ch2").chromoselector({
+			create: function() {
+				colorbg(this);
+				$(this).chromoselector('setColor','#f00');
+			},
+			update: function() {
+				colorbg(this);
+				postphp();
+			},
+			str2color: function (str) {
+				return '#' + str;
+			},
+			color2str: function (color) {
+				return color.getHexString().substring(1);
+			}
+		});
+		$("#ch3").chromoselector({
+			create: function() {
+				colorbg(this);
+				$(this).chromoselector('setColor','#f00');
+			},
+			update: function() {
+				colorbg(this);
+				postphp();
+			},
+			str2color: function (str) {
+				return '#' + str;
+			},
+			color2str: function (color) {
+				return color.getHexString().substring(1);
+			}
+		});
+		$("#ch4").chromoselector({
+			create: function() {
+				colorbg(this);
+				$(this).chromoselector('setColor','#f00');
+			},
+			update: function() {
+				colorbg(this);
+				postphp();
+			},
+			str2color: function (str) {
+				return '#' + str;
+			},
+			color2str: function (color) {
+				return color.getHexString().substring(1);
+			}
+		});
+		$("#ch5").chromoselector({
+			create: function() {
+				colorbg(this);
+				$(this).chromoselector('setColor','#f00');
+			},
+			update: function() {
+				colorbg(this);
+				postphp();
+			},
+			str2color: function (str) {
+				return '#' + str;
+			},
+			color2str: function (color) {
+				return color.getHexString().substring(1);
+			}
+		});
 	});
 </script>
 </head>
