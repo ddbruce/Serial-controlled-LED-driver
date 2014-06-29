@@ -23,7 +23,8 @@ function postphp(id,channel) {
 				settings: settingsjson,
 			},
 			success: function(data) {
-				$("#simple-msg").html('<pre><code>' + data +  '</code></pre>');
+				if (data)
+					console.log("PHP error (change.php): " + data);
 			}
 		});
 	});
