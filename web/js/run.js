@@ -14,6 +14,7 @@ function postphp(id,channel) {
 		settings.setting[0].channels[channel-1].hex = color;
 		settingsjson = JSON.stringify(settings);
 		//console.log(ch1 + "," + ch2 + "," + ch3 + "," + ch4 + "," + ch5);
+		console.log(settingsjson);
 		$.ajax({
 			url : "change.php",
 			type: "POST",
