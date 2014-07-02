@@ -15,8 +15,14 @@
 			157 Third Street
 		</div>
 	</a>
+	<div id="select">
+		Select profile:
+		<select id="profile" onchange="profchange(this.value)">
+			<option></option>
+		</select>
+	</div>
 	<div id="channels">
-		<form action="process.php" method="post">
+		<form>
 			<div>
 				<label for="ch1">Left</label>
 				<input type="text" id="ch1" name="color" value="#ff0000" readonly="true" />

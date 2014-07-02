@@ -14,7 +14,7 @@ function postphp(id,channel) {
 		settings.setting[0].channels[channel-1].hex = color;
 		settingsjson = JSON.stringify(settings);
 		//console.log(ch1 + "," + ch2 + "," + ch3 + "," + ch4 + "," + ch5);
-		console.log(settingsjson);
+		//console.log(settingsjson);
 		$.ajax({
 			url : "change.php",
 			type: "POST",
@@ -30,9 +30,30 @@ function postphp(id,channel) {
 		});
 	});
 }
+function profchange(value) {
+	$.getJSON('data/settings.js', function(settings) {
+		for (x = 0; x < settings.setting.length; x++) {
+			if (settings.setting[x].title == value) {
+				$('#ch1').chromoselector("setColor","#" + settings.setting[x].channels[0].hex).chromoselector('load');
+				$('#ch2').chromoselector("setColor","#" + settings.setting[x].channels[1].hex).chromoselector('load');
+				$('#ch3').chromoselector("setColor","#" + settings.setting[x].channels[2].hex).chromoselector('load');
+				$('#ch4').chromoselector("setColor","#" + settings.setting[x].channels[3].hex).chromoselector('load');
+				$('#ch5').chromoselector("setColor","#" + settings.setting[x].channels[4].hex).chromoselector('load');
+			}
+		}
+	});
+}
+
 $(document).ready(function() {
 	$.getJSON('data/settings.js', function(settings) {
-		var current = settings.setting[0].channels
+		var current = settings.setting[0].channels;
+
+		for (x = 0; x < settings.setting.length; x++) {
+			if (settings.setting[x].title != "current") {
+				$( "#profile" ).append( "<option value=" + settings.setting[x].title + ">" + settings.setting[x].nicename + "</option>" );
+			}
+		}
+
 		$.fn.chromoselector
 		.defaults("width", 180)
 		.defaults("ringwidth", 50)
