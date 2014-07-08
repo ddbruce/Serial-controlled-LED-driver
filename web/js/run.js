@@ -1,3 +1,4 @@
+var update_enabled = true;
 $(document).bind('touchmove', function(e) {
 	e.preventDefault();
 });
@@ -34,13 +35,33 @@ function profchange(value) {
 	$.getJSON('data/settings.js', function(settings) {
 		for (x = 0; x < settings.setting.length; x++) {
 			if (settings.setting[x].title == value) {
+				update_enabled = false;
 				$('#ch1').chromoselector("setColor","#" + settings.setting[x].channels[0].hex).chromoselector('load');
 				$('#ch2').chromoselector("setColor","#" + settings.setting[x].channels[1].hex).chromoselector('load');
 				$('#ch3').chromoselector("setColor","#" + settings.setting[x].channels[2].hex).chromoselector('load');
 				$('#ch4').chromoselector("setColor","#" + settings.setting[x].channels[3].hex).chromoselector('load');
 				$('#ch5').chromoselector("setColor","#" + settings.setting[x].channels[4].hex).chromoselector('load');
+				update_enabled = true;
+				settings.setting[0].channels[0].hex = settings.setting[x].channels[0].hex;
+				settings.setting[0].channels[1].hex = settings.setting[x].channels[1].hex;
+				settings.setting[0].channels[2].hex = settings.setting[x].channels[2].hex;
+				settings.setting[0].channels[3].hex = settings.setting[x].channels[3].hex;
+				settings.setting[0].channels[4].hex = settings.setting[x].channels[4].hex;
+				settingsjson = JSON.stringify(settings);
 			}
 		}
+		//console.log(settingsjson);
+		$.ajax({
+			url : "settingsupdate.php",
+			type: "POST",
+			data: {
+				settings: settingsjson,
+			},
+			success: function(data) {
+			//	if (data)
+					console.log("PHP error (settingsupdate.php): " + data);
+			}
+		});
 	});
 }
 
@@ -67,7 +88,8 @@ $(document).ready(function() {
 			},
 			update: function() {
 				colorbg(this);
-				postphp(this,1);
+				if (update_enabled)
+					postphp(this,1);
 			},
 			str2color: function (str) {
 				return '#' + str;
@@ -83,7 +105,8 @@ $(document).ready(function() {
 			},
 			update: function() {
 				colorbg(this);
-				postphp(this,2);
+				if (update_enabled)
+					postphp(this,2);
 			},
 			str2color: function (str) {
 				return '#' + str;
@@ -99,7 +122,8 @@ $(document).ready(function() {
 			},
 			update: function() {
 				colorbg(this);
-				postphp(this,3);
+				if (update_enabled)
+					postphp(this,3);
 			},
 			str2color: function (str) {
 				return '#' + str;
@@ -115,7 +139,8 @@ $(document).ready(function() {
 			},
 			update: function() {
 				colorbg(this);
-				postphp(this,4);
+				if (update_enabled)
+					postphp(this,4);
 			},
 			str2color: function (str) {
 				return '#' + str;
@@ -131,7 +156,8 @@ $(document).ready(function() {
 			},
 			update: function() {
 				colorbg(this);
-				postphp(this,5);
+				if (update_enabled)
+					postphp(this,5);
 			},
 			str2color: function (str) {
 				return '#' + str;
