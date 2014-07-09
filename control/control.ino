@@ -98,9 +98,9 @@ int hex2int(char x) {
 }
 
 void change(int r, int g, int b, int ch) {
-  setPWM(ch*3,r*4095/255);
-  setPWM(ch*3+1,g*4095/255);
-  setPWM(ch*3+2,b*4095/255);
+  setPWM(ch*3,r*16);
+  setPWM(ch*3+1,g*16);
+  setPWM(ch*3+2,b*16);
   
   //testing code:
   //Serial.print("Set R to " + String(r) + ", G to " + String(g) + ", and B to " + String(b) + " on channel "  + String(ch) + ".\n");
