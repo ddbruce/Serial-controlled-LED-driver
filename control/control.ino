@@ -28,7 +28,8 @@
   */
 
 #include <Wire.h>
- 
+#include <ctype.h>
+
 volatile int mode = 0; // current mode
 int button = 2; // pin of button
 volatile bool bP = false; // button pressed flag to exit current modes
@@ -40,8 +41,11 @@ volatile bool sevSegOff = true;
 volatile long modeSetTime = 0;
   
 // buffer for serial input
-char hexch[7];
-    
+#define BUFFER_SIZE 7
+char hexch[BUFFER_SIZE];
+char serial_buffer[BUFFER_SIZE];
+int serial_buffer_ptr;
+
 // definition of registers on the pwm chip
 #define LED0_ON_L 0x6
 #define LED0_ON_H 0x7
@@ -54,12 +58,36 @@ void setup(){
   Serial.begin(9600);
   Wire.begin();
   setConfiguration();
+  serial_buffer_ptr = 0;
 }
 
 void loop(){  
-  if (Serial.available() >= 8)  {
-     Serial.readBytesUntil('\n',hexch,8);
-     parse(hexch);
+  char ch;
+  int i;
+  
+  if (Serial.available() > 0)  {
+    ch = Serial.read();
+    
+    if (ch == '\n' || ch == '\r') {
+      /* straighten out the circular buffer */
+      for (i = 0; i < BUFFER_SIZE; i++) {
+        hexch[i] = serial_buffer[serial_buffer_ptr];
+        serial_buffer_ptr++;
+        if (serial_buffer_ptr == BUFFER_SIZE) {
+          serial_buffer_ptr = 0;
+        }
+      }
+      
+      /* parse the last seven characters received */
+      parse(hexch);
+    } else if (isxdigit(ch)) {
+      /* store received character in circular buffer */
+      serial_buffer[serial_buffer_ptr] = ch;
+      serial_buffer_ptr++;
+      if (serial_buffer_ptr == BUFFER_SIZE) {
+        serial_buffer_ptr = 0;
+      }
+    }
   }
 }
 
