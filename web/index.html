@@ -16,7 +16,8 @@
 		</div>
 	</a>
 	<div id="select">
-		Select profile:
+		<button id="toggle" onclick="toggle()">Toggle</button>
+		Select profile:		
 		<select id="profile" onchange="profchange(this.value)">
 			<option></option>
 		</select>
@@ -24,26 +25,26 @@
 	<div id="channels">
 		<form>
 			<div>
-				<label for="ch1">Left</label>
-				<input type="text" id="ch1" name="color" value="#ff0000" readonly="true" />
+				<label for="ch0">Left</label>
+				<input type="text" id="ch0" name="color" value="ffffff" readonly="true" />
 			</div>
 			<div>
-				<label for="ch2">Center</label>
-				<input type="text" id="ch2" name="color" value="#ff0000" readonly="true" />
+				<label for="ch1">Center</label>
+				<input type="text" id="ch1" name="color" value="ffffff" readonly="true" />
 			</div>
 			<div>
-				<label for="ch3">Right</label>
-				<input type="text" id="ch3" name="color" value="#ff0000" readonly="true" />
-			</div>
-			<br/>
-			<div>
-				<label for="ch4">Couch</label>
-				<input type="text" id="ch4" name="color" value="#ff0000" readonly="true" />
+				<label for="ch2">Right</label>
+				<input type="text" id="ch2" name="color" value="ffffff" readonly="true" />
 			</div>
 			<br/>
 			<div>
-				<label for="ch5">TV Stand</label>
-				<input type="text" id="ch5" name="color" value="#ff0000" readonly="true" />
+				<label for="ch3">Couch</label>
+				<input type="text" id="ch3" name="color" value="ffffff" readonly="true" />
+			</div>
+			<br/>
+			<div>
+				<label for="ch4">TV Stand</label>
+				<input type="text" id="ch4" name="color" value="ffffff" readonly="true" />
 			</div>
 		</form>	
 	</div>

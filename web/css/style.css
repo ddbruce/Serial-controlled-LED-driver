@@ -92,3 +92,11 @@ label {
 	font-size: inherit;
 	font-family: inherit;
 }
+
+#toggle {
+	padding: 8px 20px;
+	background-color: #333;
+	color: white;
+	border: 2px ridge gray;
+	margin-right: 80px;
+}

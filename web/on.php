@@ -1,6 +1,5 @@
 <?php 
 $colors = $_POST["colors"];
-$settings = $_POST["settings"];
 $com0 = "echo ".'"'.substr($colors,0,7)." > /dev/arduino";
 $com1 = "echo ".'"'.substr($colors,7,7)." > /dev/arduino";
 $com2 = "echo ".'"'.substr($colors,14,7)." > /dev/arduino";
@@ -11,6 +10,5 @@ $output1 = shell_exec($com1);
 $output2 = shell_exec($com2);
 $output3 = shell_exec($com3);
 $output4 = shell_exec($com4);
-file_put_contents("data/settings.js", $settings);
-//echo "worked";
+file_put_contents("data/state.js", {"state":"on"})
 ?>
