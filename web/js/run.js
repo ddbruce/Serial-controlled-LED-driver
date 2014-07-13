@@ -10,26 +10,31 @@ function colorbg(id){
 	});
 }	
 function postphp(id,channel) {
-	$.getJSON('data/settings.js', function(settings) {
-		var color = $(id).chromoselector('getColor').getHexString().substring(1);
-		settings.setting[0].channels[channel].hex = color;
-		settingsjson = JSON.stringify(settings);
-//console.log(ch0 + "," + ch1 + "," + ch2 + "," + ch3 + "," + ch4);
-//console.log(settingsjson);
-$.ajax({
-	url : "change.php",
-	type: "POST",
-	data: {
-		channel: channel,
-		color: color,
-		settings: settingsjson,
-	},
-	success: function(data) {
-		if (data)
-			console.log("PHP error (change.php): " + data);
-	}
-});
-});
+	$.getJSON('/data/state.js', function(state) {
+		if (state.state == 'off')
+			return;
+		else {
+			$.getJSON('data/settings.js', function(settings) {
+				var color = $(id).chromoselector('getColor').getHexString().substring(1);
+				settings.setting[0].channels[channel].hex = color;
+				settingsjson = JSON.stringify(settings);
+				//console.log(ch0 + "," + ch1 + "," + ch2 + "," + ch3 + "," + ch4);
+				$.ajax({
+					url : "change.php",
+					type: "POST",
+					data: {
+						channel: channel,
+						color: color,
+						settings: settingsjson,
+					},
+					success: function(data) {
+						if (data)
+							console.log("PHP error (change.php): " + data);
+					}
+				});
+			});
+		}
+	});
 }
 function profchange(value) {
 	$.getJSON('data/settings.js', function(settings) {
@@ -51,10 +56,10 @@ function profchange(value) {
 			}
 		}
 		var colors = settings.setting[x].channels[0].hex + "0";
-		colors = settings.setting[x].channels[1].hex + "1";
-		colors = settings.setting[x].channels[2].hex + "2";
-		colors = settings.setting[x].channels[3].hex + "3";
-		colors = settings.setting[x].channels[4].hex + "4";
+		colors += settings.setting[x].channels[1].hex + "1";
+		colors += settings.setting[x].channels[2].hex + "2";
+		colors += settings.setting[x].channels[3].hex + "3";
+		colors += settings.setting[x].channels[4].hex + "4";
 		$.ajax({
 			url : "settingsupdate.php",
 			type: "POST",
@@ -71,8 +76,7 @@ function profchange(value) {
 }
 function toggle() {
 	$.getJSON('/data/state.js', function(state) {
-		var lights_on_off = state.state;
-		if (lights_on_off == "on") {
+		if (state.state == "on") {
 			$.ajax({
 				url : "off.php",
 				type: "POST",
@@ -90,11 +94,12 @@ function toggle() {
 				$('#ch3').chromoselector("setColor","#" + settings.setting[0].channels[3].hex).chromoselector('load');
 				$('#ch4').chromoselector("setColor","#" + settings.setting[0].channels[4].hex).chromoselector('load');
 				update_enabled = true;
-				var colors = settings.setting[x].channels[0].hex + "0";
-				colors = settings.setting[x].channels[1].hex + "1";
-				colors = settings.setting[x].channels[2].hex + "2";
-				colors = settings.setting[x].channels[3].hex + "3";
-				colors = settings.setting[x].channels[4].hex + "4";
+				var colors;
+				colors += settings.setting[0].channels[0].hex + "0";
+				colors += settings.setting[0].channels[1].hex + "1";
+				colors += settings.setting[0].channels[2].hex + "2";
+				colors += settings.setting[0].channels[3].hex + "3";
+				colors += settings.setting[0].channels[4].hex + "4";
 				$.ajax({
 					url : "on.php",
 					type: "POST",
@@ -107,8 +112,8 @@ function toggle() {
 					}
 				});
 			});
-		}
-	});
+}
+});
 }
 $(document).ready(function() {
 	$.getJSON('data/settings.js', function(settings) {
