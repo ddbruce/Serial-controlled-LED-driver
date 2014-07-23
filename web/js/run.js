@@ -88,60 +88,64 @@ function profchange(value) {
 				colors += settings.setting[x].channels[2].hex + "2";
 				colors += settings.setting[x].channels[3].hex + "3";
 				colors += settings.setting[x].channels[4].hex + "4";
-				$.ajax({
-					url : "settingsupdate.php",
-					type: "POST",
-					data: {
-						colors: colors,
-						settings: settingsjson,
-					},
-					success: function(data) {
-						if (data)
-							console.log("PHP error (settingsupdate.php): " + data);
+				$.getJSON('/data/state.js', function(state) {
+					if (state.state == "on") {
+						$.ajax({
+							url : "settingsupdate.php",
+							type: "POST",
+							data: {
+								colors: colors,
+								settings: settingsjson,
+							},
+							success: function(data) {
+								if (data)
+									console.log("PHP error (settingsupdate.php): " + data);
+							}
+						});
 					}
-				});
+				}
 			}
 		}
 	});
-}
-function toggle() {
-	$.getJSON('/data/state.js', function(state) {
-		if (state.state == "on") {
-			$.ajax({
-				url : "off.php",
-				type: "POST",
-				success: function(data) {
-					if (data)
-						console.log("PHP error (off.php): " + data);
-				}
-			});
-		} else {
-			$.getJSON('/data/settings.js', function(settings) {
-				update_enabled = false;
-				$('#ch0').chromoselector("setColor","#" + settings.setting[0].channels[0].hex).chromoselector('load');
-				$('#ch1').chromoselector("setColor","#" + settings.setting[0].channels[1].hex).chromoselector('load');
-				$('#ch2').chromoselector("setColor","#" + settings.setting[0].channels[2].hex).chromoselector('load');
-				$('#ch3').chromoselector("setColor","#" + settings.setting[0].channels[3].hex).chromoselector('load');
-				$('#ch4').chromoselector("setColor","#" + settings.setting[0].channels[4].hex).chromoselector('load');
-				update_enabled = true;
-				var colors = "";
-				colors += settings.setting[0].channels[0].hex + "0";
-				colors += settings.setting[0].channels[1].hex + "1";
-				colors += settings.setting[0].channels[2].hex + "2";
-				colors += settings.setting[0].channels[3].hex + "3";
-				colors += settings.setting[0].channels[4].hex + "4";
-				$.ajax({
-					url : "on.php",
-					type: "POST",
-					data: {
-						colors: colors,
-					},
-					success: function(data) {
-						if (data)
-							console.log("PHP error (settingsupdate.php): " + data);
-					}
-				});
-			});
+			}
+			function toggle() {
+				$.getJSON('/data/state.js', function(state) {
+					if (state.state == "on") {
+						$.ajax({
+							url : "off.php",
+							type: "POST",
+							success: function(data) {
+								if (data)
+									console.log("PHP error (off.php): " + data);
+							}
+						});
+					} else {
+						$.getJSON('/data/settings.js', function(settings) {
+							update_enabled = false;
+							$('#ch0').chromoselector("setColor","#" + settings.setting[0].channels[0].hex).chromoselector('load');
+							$('#ch1').chromoselector("setColor","#" + settings.setting[0].channels[1].hex).chromoselector('load');
+							$('#ch2').chromoselector("setColor","#" + settings.setting[0].channels[2].hex).chromoselector('load');
+							$('#ch3').chromoselector("setColor","#" + settings.setting[0].channels[3].hex).chromoselector('load');
+							$('#ch4').chromoselector("setColor","#" + settings.setting[0].channels[4].hex).chromoselector('load');
+							update_enabled = true;
+							var colors = "";
+							colors += settings.setting[0].channels[0].hex + "0";
+							colors += settings.setting[0].channels[1].hex + "1";
+							colors += settings.setting[0].channels[2].hex + "2";
+							colors += settings.setting[0].channels[3].hex + "3";
+							colors += settings.setting[0].channels[4].hex + "4";
+							$.ajax({
+								url : "on.php",
+								type: "POST",
+								data: {
+									colors: colors,
+								},
+								success: function(data) {
+									if (data)
+										console.log("PHP error (settingsupdate.php): " + data);
+								}
+							});
+						});
 }
 });
 }
