@@ -53,25 +53,26 @@ function profchange(value) {
 				settings.setting[0].channels[3].hex = settings.setting[x].channels[3].hex;
 				settings.setting[0].channels[4].hex = settings.setting[x].channels[4].hex;
 				settingsjson = JSON.stringify(settings);
+				var colors = "";
+				colors += settings.setting[x].channels[0].hex + "0";
+				colors += settings.setting[x].channels[1].hex + "1";
+				colors += settings.setting[x].channels[2].hex + "2";
+				colors += settings.setting[x].channels[3].hex + "3";
+				colors += settings.setting[x].channels[4].hex + "4";
+				$.ajax({
+					url : "settingsupdate.php",
+					type: "POST",
+					data: {
+						colors: colors,
+						settings: settingsjson,
+					},
+					success: function(data) {
+						if (data)
+							console.log("PHP error (settingsupdate.php): " + data);
+					}
+				});
 			}
 		}
-		var colors = settings.setting[x].channels[0].hex + "0";
-		colors += settings.setting[x].channels[1].hex + "1";
-		colors += settings.setting[x].channels[2].hex + "2";
-		colors += settings.setting[x].channels[3].hex + "3";
-		colors += settings.setting[x].channels[4].hex + "4";
-		$.ajax({
-			url : "settingsupdate.php",
-			type: "POST",
-			data: {
-				colors: colors,
-				settings: settingsjson,
-			},
-			success: function(data) {
-				if (data)
-					console.log("PHP error (settingsupdate.php): " + data);
-			}
-		});
 	});
 }
 function toggle() {
@@ -94,7 +95,7 @@ function toggle() {
 				$('#ch3').chromoselector("setColor","#" + settings.setting[0].channels[3].hex).chromoselector('load');
 				$('#ch4').chromoselector("setColor","#" + settings.setting[0].channels[4].hex).chromoselector('load');
 				update_enabled = true;
-				var colors;
+				var colors = "";
 				colors += settings.setting[0].channels[0].hex + "0";
 				colors += settings.setting[0].channels[1].hex + "1";
 				colors += settings.setting[0].channels[2].hex + "2";
