@@ -102,6 +102,18 @@ function profchange(value) {
 									console.log("PHP error (settingsupdate.php): " + data);
 							}
 						});
+					} else {
+						$.ajax({
+							url : "updatecurrent.php",
+							type: "POST",
+							data: {
+								settings: settingsjson,
+							},
+							success: function(data) {
+								if (data)
+									console.log("PHP error (settingsupdate.php): " + data);
+							}
+						});
 					}
 				});
 			}
