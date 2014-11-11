@@ -40,8 +40,24 @@ function colorbg(id){
 }	
 function postphp(id,channel) {
 	$.getJSON('/data/state.js', function(state) {
-		if (state.state == 'off')
-			return;
+		if (state.state == 'off') {
+			$.getJSON('data/settings.js', function(settings) {
+				var color = $(id).chromoselector('getColor').getHexString().substring(1);
+				settings.setting[0].channels[channel].hex = color;
+				settingsjson = JSON.stringify(settings);
+				$.ajax({
+					url : "updatecurrent.php",
+					type: "POST",
+					data: {
+						settings: settingsjson,
+					},
+					success: function(data) {
+						if (data)
+							console.log("PHP error (settingsupdate.php): " + data);
+					}
+				});
+			});
+		}
 		else {
 			$.getJSON('data/settings.js', function(settings) {
 				var color = $(id).chromoselector('getColor').getHexString().substring(1);
