@@ -18,7 +18,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
 The developer can be found at:
-  daniel@danieldbruce.com
+daniel@danieldbruce.com
 
 If that doesn't work, contact the Rensselaer Union
 Administration office and ask. Chances are they'll have a
@@ -63,26 +63,85 @@ function postphp(id,channel) {
 				var color = $(id).chromoselector('getColor').getHexString().substring(1);
 				settings.setting[0].channels[channel].hex = color;
 				settingsjson = JSON.stringify(settings);
-				//console.log(ch0 + "," + ch1 + "," + ch2 + "," + ch3 + "," + ch4);
+			//console.log(ch0 + "," + ch1 + "," + ch2 + "," + ch3 + "," + ch4);
+			$.ajax({
+				url : "change.php",
+				type: "POST",
+				data: {
+					channel: channel,
+					color: color,
+					settings: settingsjson,
+				},
+				success: function(data) {
+					if (data)
+						console.log("PHP error (change.php): " + data);
+				}
+			});
+		});
+		}
+	});
+}
+function random() {
+	$.getJSON('data/settings.js', function(settings) {
+		var color0 = Math.floor(Math.random()*16777215).toString(16);
+		var color1 = Math.floor(Math.random()*16777215).toString(16);
+		var color2 = Math.floor(Math.random()*16777215).toString(16);
+		var color3 = Math.floor(Math.random()*16777215).toString(16);
+		var color4 = Math.floor(Math.random()*16777215).toString(16);
+		update_enabled = false;
+		$('#ch0').chromoselector("setColor","#" + color0).chromoselector('load');
+		$('#ch1').chromoselector("setColor","#" + color1).chromoselector('load');
+		$('#ch2').chromoselector("setColor","#" + color2).chromoselector('load');
+		$('#ch3').chromoselector("setColor","#" + color3).chromoselector('load');
+		$('#ch4').chromoselector("setColor","#" + color4).chromoselector('load');
+		update_enabled = true;
+		settings.setting[0].channels[0].hex = color0;
+		settings.setting[0].channels[1].hex = color1;
+		settings.setting[0].channels[2].hex = color2;
+		settings.setting[0].channels[3].hex = color3;
+		settings.setting[0].channels[4].hex = color4;
+		settingsjson = JSON.stringify(settings);
+		var colors = "";
+		colors += color0 + "0";
+		colors += color1 + "1";
+		colors += color2 + "2";
+		colors += color3 + "3";
+		colors += color4 + "4";
+		$.getJSON('/data/state.js', function(state) {
+			if (state.state == "on") {
 				$.ajax({
-					url : "change.php",
+					url : "settingsupdate.php",
 					type: "POST",
 					data: {
-						channel: channel,
-						color: color,
+						colors: colors,
 						settings: settingsjson,
 					},
 					success: function(data) {
 						if (data)
-							console.log("PHP error (change.php): " + data);
+							console.log("PHP error (settingsupdate.php): " + data);
 					}
 				});
-			});
-		}
+			} else {
+				$.ajax({
+					url : "updatecurrent.php",
+					type: "POST",
+					data: {
+						settings: settingsjson,
+					},
+					success: function(data) {
+						if (data)
+							console.log("PHP error (settingsupdate.php): " + data);
+					}
+				});
+			}
+		});
 	});
 }
 function profchange(value) {
 	$.getJSON('data/settings.js', function(settings) {
+		if (value == "random") {
+			random();
+		}
 		for (x = 0; x < settings.setting.length; x++) {
 			if (settings.setting[x].title == value) {
 				update_enabled = false;
@@ -188,6 +247,8 @@ $(document).ready(function() {
 				$( "#profile" ).append( "<option value=" + settings.setting[x].title + ">" + settings.setting[x].nicename + "</option>" );
 			}
 		}
+		$( "#profile" ).append( '<option value="random"> Random </option>' );
+
 
 		$.fn.chromoselector
 		.defaults("width", 180)

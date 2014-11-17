@@ -139,6 +139,7 @@ void change(int r, int g, int b, int ch) {
  */
 void setPWM(int channel, uint16_t brightness)
 {
+  if (channel >= 7) channel += 1;
   Wire.beginTransmission(PWM_ADDR);
   Wire.write(LED0_ON_L+4*channel);
   Wire.write(0x00); //turn the LED on at 0

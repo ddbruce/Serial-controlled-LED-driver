@@ -74,7 +74,7 @@ label {
 }
 
 #select {
-	width: 500px;
+	width: 700px;
 	text-align: center;
 	margin: 20px auto;
 	padding: 20px;
@@ -91,12 +91,17 @@ label {
 	padding: 5px;
 	font-size: inherit;
 	font-family: inherit;
+	margin-right: 80px;
 }
 
-#toggle {
+#toggle, #random {
 	padding: 8px 20px;
 	background-color: #333;
 	color: white;
 	border: 2px ridge gray;
 	margin-right: 80px;
+}
+
+#random {
+	margin-right: 0;
 }
