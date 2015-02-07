@@ -45,6 +45,7 @@ function postphp(id,channel) {
 				var color = $(id).chromoselector('getColor').getHexString().substring(1);
 				settings.setting[0].channels[channel].hex = color;
 				settingsjson = JSON.stringify(settings);
+				$.ajaxSetup({ cache: false });
 				$.ajax({
 					url : "updatecurrent.php",
 					type: "POST",
@@ -64,6 +65,7 @@ function postphp(id,channel) {
 				settings.setting[0].channels[channel].hex = color;
 				settingsjson = JSON.stringify(settings);
 			//console.log(ch0 + "," + ch1 + "," + ch2 + "," + ch3 + "," + ch4);
+			$.ajaxSetup({ cache: false });
 			$.ajax({
 				url : "change.php",
 				type: "POST",
@@ -109,6 +111,7 @@ function random() {
 		colors += color4 + "4";
 		$.getJSON('/data/state.js', function(state) {
 			if (state.state == "on") {
+				$.ajaxSetup({ cache: false });
 				$.ajax({
 					url : "settingsupdate.php",
 					type: "POST",
@@ -122,6 +125,7 @@ function random() {
 					}
 				});
 			} else {
+				$.ajaxSetup({ cache: false });
 				$.ajax({
 					url : "updatecurrent.php",
 					type: "POST",
@@ -165,6 +169,7 @@ function profchange(value) {
 				colors += settings.setting[x].channels[4].hex + "4";
 				$.getJSON('/data/state.js', function(state) {
 					if (state.state == "on") {
+						$.ajaxSetup({ cache: false });
 						$.ajax({
 							url : "settingsupdate.php",
 							type: "POST",
@@ -178,6 +183,7 @@ function profchange(value) {
 							}
 						});
 					} else {
+						$.ajaxSetup({ cache: false });
 						$.ajax({
 							url : "updatecurrent.php",
 							type: "POST",
@@ -198,6 +204,7 @@ function profchange(value) {
 function toggle() {
 	$.getJSON('/data/state.js', function(state) {
 		if (state.state == "on") {
+			$.ajaxSetup({ cache: false });
 			$.ajax({
 				url : "off.php",
 				type: "POST",
@@ -222,6 +229,7 @@ function toggle() {
 				colors += settings.setting[0].channels[2].hex + "2";
 				colors += settings.setting[0].channels[3].hex + "3";
 				colors += settings.setting[0].channels[4].hex + "4";
+				$.ajaxSetup({ cache: false });
 				$.ajax({
 					url : "on.php",
 					type: "POST",
